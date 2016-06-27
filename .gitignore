@@ -7,3 +7,14 @@ Homestead.json
 /public/img/uploads
 /.idea
 /public/imgs/uploads
+/database/
+/data-formats/
+/config/
+/bootstrap/
+/app/
+/resources/lang/
+/resources/assets/
+/resources/views/errors/
+/resources/views/vendor/
+/storage/
+/tests/
