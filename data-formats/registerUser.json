@@ -1,0 +1,8 @@
+// Método: POST, url: registerUser
+{
+	'email': 'blabla@plantar.mx',
+	'password': '12345',
+	'first_name': 'Juan',
+	'last_name': 'Perez',
+	'cliente': 'el-deposito' //Slug del cliente
+}

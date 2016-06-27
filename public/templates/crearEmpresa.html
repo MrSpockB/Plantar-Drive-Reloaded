@@ -1,0 +1,27 @@
+<div>
+    <h4>Nuevo Cliente</h4>
+    <div class="divider" style="margin-bottom: 20px;"></div>
+    <form id="form-empresa">
+        <div class="input-field">
+            <input type="text" id="txtNombre" ng-model="nombre">
+            <label for="txtNombre">Nombre</label>
+        </div>
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>Imagen</span>
+                <input type="file" ngf-select="onFileSelect($files)">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path" type="text" ng-model="fileString">
+            </div>
+        </div>
+        <a class="btn waves-effect waves-light right" ng-click="sendData();">Crear</a>
+    </form>
+</div>
+
+<style>
+    #form-empresa{
+        max-width: 700px;
+        margin: auto;
+    }
+</style>

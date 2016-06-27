@@ -1,0 +1,5 @@
+// Método: POST, url: clientes
+{
+	'nombre': 'Minerva',
+	'logo': //Archivo de la imagen
+}

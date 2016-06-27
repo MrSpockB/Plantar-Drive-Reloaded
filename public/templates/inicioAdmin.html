@@ -1,0 +1,20 @@
+<div>
+    <div class="row">
+        <div class="col s12 m3" ng-repeat="empresa in empresas">
+            <a href="admin/clientes/{{empresa.slug}}">
+                <div class="card-panel" style="border-radius: 20px;">
+                    <div class="row valign-wrapper" style="margin-bottom: 0;">
+                        <div class="col s5">
+                            <div style="width: 60px; height: 60px; overflow: hidden;" class="circle">
+                                <div style="background-image: url({{empresa.path_image}}); height: 100%; width:100%; background-size: cover; background-position: 50%;"></div>
+                            </div>
+                        </div>
+                        <div class="col s7">
+                            <span class="black-text">{{empresa.name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

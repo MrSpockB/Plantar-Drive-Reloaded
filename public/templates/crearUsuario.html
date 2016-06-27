@@ -1,0 +1,37 @@
+<div ng-init="loadData();">
+    <h4>Nuevo Usuario</h4>
+    <div class="divider" style="margin-bottom: 20px;"></div>
+    <form id="form-user">
+        <select ng-model="tipos_usuario.selected" ng-change="validShowEmpresa();">
+            <option value="" disabled selected>Tipo de usuario</option>
+            <option ng-repeat="tipo in tipos_usuario.options" value="{{tipo | firstCharToLowerCase}}">{{tipo}}</option>
+        </select>
+        <div class="input-field"><input type="text" ng-model="nombre" id="txtNombre"><label for="txtNombre">Nombre</label></div>
+        <div class="input-field"><input type="text" ng-model="apellido" id="txtApellido"><label for="txtApellido">Apellido</label></div>
+        <div class="input-field">
+            <input type="email" ng-model="email" ng-change="validateEMAIL()" id="txtMail" class="validate">
+            <label for="txtMail">Correo</label>
+        </div>
+        <div class="input-field"><input type="text" ng-model="r_email" id="txtRMail" ng-class="mailClassValid" ng-change="validateMail();"><label for="txtRMail">Repetir Correo</label></div>
+        <div class="input-field"><input type="password" ng-model="pass" id="txtPass" ng-class="theClassPass" ng-change="validatePass();"><label for="txtPass">Contraseña</label></div>
+        <div class="input-field"><input type="password" ng-model="r_pass" id="txtRPass" ng-class="passClassValid" ng-change="validatePassword();"><label for="txtRPass">Repetir Contraseña</label></div>
+        <select ng-model="empresas.selected">
+            <option value="" disabled selected>Empresa</option>
+            <option ng-repeat="empresa in empresas.options" value="{{empresa.slug}}">{{empresa.name}}</option>
+        </select>
+        <a class="btn waves-effect waves-light" ng-click="send();">Crear</a>
+    </form>
+</div>
+<style>
+    #form-user{
+        max-width: 700px;
+        margin: 20px auto;
+    }
+</style>
+<script>
+    setTimeout(function () {
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    }, 300);
+</script>

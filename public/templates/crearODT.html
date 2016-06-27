@@ -1,0 +1,78 @@
+<div ng-init="loadData();">
+    <div class="col m4 l4 s4">
+        <h3>{{Cliente}}</h3>
+        <h5>Crear Orden de Trabajo</h5>
+    </div>
+    <div class="divider" style="margin-bottom: 20px;"></div>
+    <form class="form-odt">
+        <div class="input-field">
+            <input type="text" id="txtNombreProyecto">
+            <label for="txtNombreProyecto">Nombre del Proyecto</label>
+        </div>
+        <div class="input-field">
+            <input id="txtCliente" type="text" disabled ng-model="Cliente">
+            <label for="txtCliente" class="active">Cliente</label>
+        </div>
+        <div class="input-field">
+            <input disabled type="text" id="txtFecha" ng-model="Fecha">
+            <label for="txtFecha" class="active">Fecha</label>
+        </div>
+        <div class="input-field" style="margin-bottom: 35px;">
+            <select ng-model="Areas.selected">
+                <option value="" disabled selected>Areas</option>
+                <option ng-repeat="area in Areas.options" value="{{area | firstCharToLowerCase}}">{{area}}</option>
+            </select>
+        </div>
+        <div class="input-field">
+            <textarea id="txtadescProyecto" class="materialize-textarea"></textarea>
+            <label for="txtadescProyecto">Descripcion del Proyecto</label>
+        </div>
+        <div class="input-field">
+            <input type="text" id="txtResponsables" ng-keyup="complete();" autocomplete="off">
+            <label for="txtResponsables">Responsables</label>
+        </div>
+        <div>
+            <div class="chip">Plantar</div>
+            <div class="chip" ng-repeat="responsable in SelectedResponsables">
+                {{responsable.first_name}} {{responsable.last_name}}
+                <i class="material-icons" ng-click="deleteResp(responsable.client_id);">close</i>
+            </div>
+        </div>
+        <div class="input-field">
+            <input type="date" class="datepicker" id="dtInicio">
+            <label for="dtInicio">Inicio</label>
+        </div>
+        <div class="input-field">
+            <input type="date" class="datepicker" id="dtFin">
+            <label for="dtFin">Fin</label>
+        </div>
+
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>Seleccionar</span>
+                <input type="file" ngf-select="onFileSelect($files)" multiple ng-model="filesSelected">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path" type="text" placeholder="Seleccionar archivos adjuntos.">
+            </div>
+        </div>
+    </form>
+</div>
+<style>
+    .form-odt{
+        max-width: 700px;
+        margin: 0 auto;
+    }
+</style>
+<script>
+    setTimeout(function () {
+        $(document).ready(function() {
+            $('select').material_select();
+            $('.datepicker').pickadate({
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 15 // Creates a dropdown of 15 years to control year
+            });
+        });
+
+    },100);
+</script>

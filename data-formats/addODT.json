@@ -1,0 +1,9 @@
+{
+	'nombre': 'Orden de Trabajo 1',
+	'fechaCreacion': '2016-06-07',
+	'area': 'Redes',
+	'descripcion': 'Lorem ipsum...',
+	'fechaInicio':  '2016-06-08',
+	'fechaFin': '2016-06-11',
+	'usuarios': '2,3' //Lista de ID's de los usuarios separadasp por comas
+}
