@@ -57,6 +57,7 @@ app.controller("crearODT", ["$scope", "$http", "$location", function (s, http, l
             "Cotizaciónes"
         ]
     };
+    s.dateInicio = "";
     s.Responsables = [];
     s.SelectedResponsables = [];
     s.loadData = function () {
@@ -132,6 +133,10 @@ app.controller("crearODT", ["$scope", "$http", "$location", function (s, http, l
                 break;
             }
         }
+    };
+
+    s.send = function () {
+        alert(s.dateInicio);
     }
 }]);
 // Crear Empresa

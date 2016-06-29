@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="input-field">
-            <input type="date" class="datepicker" id="dtInicio">
+            <input type="date" class="datepicker" id="dtInicio" ng-model="dateInicio">
             <label for="dtInicio">Inicio</label>
         </div>
         <div class="input-field">
@@ -56,12 +56,18 @@
                 <input class="file-path" type="text" placeholder="Seleccionar archivos adjuntos.">
             </div>
         </div>
+        <div class="input-field center">
+            <a class="btn waves-effect waves-light">Guardar Borrador</a>
+        </div>
+        <div class="input-field center">
+            <a class="btn waves-effect waves-light" ng-click="send();">Crear</a>
+        </div>
     </form>
 </div>
 <style>
     .form-odt{
         max-width: 700px;
-        margin: 0 auto;
+        margin: 20px auto;
     }
 </style>
 <script>
