@@ -90,7 +90,23 @@ class SentinelController extends Controller
         }
         else
         {
-            return response()->json(['success' => false, 'msg' => 'User is not logged in']);
+            return response()->json(['success' => false, 'msg' => 'No esta logueado']);
+        }
+    }
+    public function searchUserbyEmail($email)
+    {
+        $credentials = [
+            'login' => $email,
+        ];
+
+        $user = Sentinel::findByCredentials($credentials);
+        if($user)
+        {
+            return response()->json(['success' => true, 'user' => $user]);
+        }
+        else
+        {
+            return response()->json(['success' => false, 'msg' => "No se encontro el usuario"]);
         }
     }
 }
