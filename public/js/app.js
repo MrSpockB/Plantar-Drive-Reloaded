@@ -43,12 +43,15 @@ app.controller("ODTs", ["$scope", "$http", "$location", function (s, http, l) {
 // Crear orden de trabajo
 app.controller("crearODT", ["$scope", "$http", "$location", function (s, http, l) {
     s.Cliente = l.path().split('/')[3];
-    s.files = [];
-    s.filesSelected = "";
-    s.Fecha = moment().format('YYYY-MM-DD');
-    s.Areas = {
-        selected: null,
-        "options": [
+    s.NombreProyecto = ""; // Nombre de la ODT
+    s.Descripcion = "" // Descripcion general de ODT
+    s.files = []; // Lista de archivos seleccionados
+    s.filesSelected = ""; // String de atributo name de un archivo
+    s.Fecha = moment().format('YYYY-MM-DD'); // Fecha actual
+    s.RespPrincipal = {}; // Responsable principal (Plantar)
+    s.Areas = { // Areas de trabajo para combobox
+        selected: null, // Aqui se guarda el seleccionado
+        "options": [ // Distintas opciones a elegir
             "Web",
             "Diseño",
             "Contenido",
@@ -57,30 +60,44 @@ app.controller("crearODT", ["$scope", "$http", "$location", function (s, http, l
             "Cotizaciónes"
         ]
     };
-    s.dateInicio = "";
-    s.Responsables = [];
-    s.SelectedResponsables = [];
+    s.dateInicio = ""; // Fecha de Inicio
+    s.dateFin = ""; // Fecha de Fin
+    s.Responsables = []; // Lista de responsables
+    s.SelectedResponsables = []; // Lista de responsables seleccionados
     s.loadData = function () {
-        http.get(url+"/data/users").then(function (response) {
+        // Se carga el responsable principal
+        http.get(url+"/data/user/gustavo@plantar.mx").then(function (response) {
             if(response.data.success){
-                s.Responsables = response.data.data;
+                s.RespPrincipal = response.data.user; // Se guarda en su respectiva variable
             }
-            for(var i = 0; i < s.Responsables.length; i++){
-                if(s.Responsables.first_name == "Plantar"){
-                    s.SelectedResponsables.push(s.Responsables[i]);
-                    break;
-                }
+        }, function (response) {
+            console.log("ERROR: ", response);
+        });
+        // Se cargan los usuarios que correspondan al cliente
+        http.get(url+"/data/users/" + s.Cliente).then(function (response) {
+            if(response.data.success){
+                s.Responsables = response.data.data; // Guarda usuarios como posibles reesponsables
             }
         }, function (response) {
             console.log("ERROR: ", response);
         });
     };
+
     s.onFileSelect = function ($files) {
         for(var i = 0; i < $files.length; i++){
-            s.files.push($files[i]);
+            if(!existFile($files[i]))
+                s.files.push($files[i]);
         }
-        
     };
+
+    function existFile(file) {
+        for(var i = 0; i < s.files.length; i++){
+            if(s.files[i].name == file.name)
+                return true;
+        }
+        return false;
+    }
+
     s.complete = function () {
         $("#txtResponsables").autocomplete({
             minLength: 1,
@@ -126,6 +143,7 @@ app.controller("crearODT", ["$scope", "$http", "$location", function (s, http, l
         }
         return false;
     }
+    
     s.deleteResp= function (rId) {
         for(var i = 0; i < s.SelectedResponsables.length; i++){
             if(rId == s.SelectedResponsables[i].client_id){
@@ -135,9 +153,20 @@ app.controller("crearODT", ["$scope", "$http", "$location", function (s, http, l
         }
     };
 
+    s.deleteFile= function (name) {
+        for(var i = 0; i < s.files.length; i++){
+            if(name == s.files[i].name){
+                s.files.splice(i, 1);
+                break;
+            }
+        }
+    };
+
     s.send = function () {
-        alert(s.dateInicio);
-    }
+        var dtInicio = moment(s.dateInicio, 'dddd MMMM DD YYYY HH:mm:ss ZZ').format('YYYY-MM-DD');
+        var dtFin = moment(s.dateFin, 'dddd MMMM DD YYYY HH:mm:ss ZZ').format('YYYY-MM-DD');
+        alert(dtInicio + " ### " + dtFin);
+    };
 }]);
 // Crear Empresa
 app.controller("crearEmpresa", ["$scope", "Upload", function (s, Upload) {
