@@ -15,6 +15,7 @@ Route::resource('data/clientes', 'ClientController',['except'=>['create', 'edit'
 Route::resource('data/clientes.odts', 'ODTController',['except'=>['create', 'edit'], 'parameters'=>'singular']);
 Route::get('data/users', 'SentinelController@getUsers');
 Route::get('data/users/{client}', 'SentinelController@getUsersbyClient');
+Route::get('data/user/{email}', 'SentinelController@searchUserbyEmail');
 Route::get('/checkLogin', 'SentinelController@checkLogin');
 Route::post('/registerUser', 'SentinelController@createUser');
 Route::post('/registerAdmin', 'SentinelController@createAdmin');
