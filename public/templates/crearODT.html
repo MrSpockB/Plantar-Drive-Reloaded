@@ -1,16 +1,16 @@
 <div ng-init="loadData();">
     <div class="col m4 l4 s4">
-        <h3>{{Cliente}}</h3>
+        <h3>{{Cliente | firstCharToUpperCase}}</h3>
         <h5>Crear Orden de Trabajo</h5>
     </div>
     <div class="divider" style="margin-bottom: 20px;"></div>
     <form class="form-odt">
         <div class="input-field">
-            <input type="text" id="txtNombreProyecto" ng-model="NombreProyecto">
+            <input type="text" id="txtNombreProyecto" ng-model="NombreProyecto" class="validate">
             <label for="txtNombreProyecto">Nombre del Proyecto</label>
         </div>
         <div class="input-field">
-            <input id="txtCliente" type="text" disabled ng-model="Cliente">
+            <input id="txtCliente" type="text" disabled value="{{Cliente | firstCharToUpperCase}}">
             <label for="txtCliente" class="active">Cliente</label>
         </div>
         <div class="input-field">
@@ -24,7 +24,7 @@
             </select>
         </div>
         <div class="input-field">
-            <textarea id="txtadescProyecto" class="materialize-textarea" ng-model="Descripcion"></textarea>
+            <textarea id="txtadescProyecto" class="materialize-textarea" ng-model="Descripcion" class="validate"></textarea>
             <label for="txtadescProyecto">Descripcion del Proyecto</label>
         </div>
         <div class="input-field">
@@ -41,11 +41,11 @@
             </div>
         </div>
         <div class="input-field">
-            <input type="date" class="datepicker" id="dtInicio" ng-model="dateInicio">
+            <input type="date" class="datepicker validate" id="dtInicio" ng-model="dateInicio">
             <label for="dtInicio">Inicio</label>
         </div>
         <div class="input-field">
-            <input type="date" class="datepicker" id="dtFin" ng-model="dateFin">
+            <input type="date" class="datepicker validate" id="dtFin" ng-model="dateFin">
             <label for="dtFin">Fin</label>
         </div>
 

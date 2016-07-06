@@ -1,7 +1,7 @@
 <div>
     <div class="row" style="margin-bottom: 0;">
         <div class="col m4 l4 s4">
-            <h4>{{Cliente}}</h4>
+            <h4>{{Cliente | firstCharToUpperCase}}</h4>
         </div>
         <div class="col m4 l4 s4" style="margin: 1.14rem 0 0.912rem 0;">
             <a href="admin/crearODT/{{Cliente}}" class="btn waves-effect waves-light right">Crear Nueva</a>
@@ -19,7 +19,7 @@
     </div>
     <div class="divider" style="margin-bottom: 20px;"></div>
     <div class="row">
-        <div class="col m4 s4 center"><b>Orden de trabajo</b></div>
+        <div class="col m4 s4 center"><a href=""><b>Orden de trabajo</b></a></div>
         <div class="col m2 s4 center"><b>Encargado</b></div>
         <div class="col m2 s4 center"><b>Fecha</b></div>
         <div class="col m2 s4 center"><b>Progreso</b></div>

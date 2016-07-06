@@ -18,6 +18,14 @@ app.filter("firstCharToLowerCase", function () {
         return "";
     }
 });
+
+app.filter("firstCharToUpperCase", function () {
+    return function (input) {
+        if(input != null)
+            return input.charAt(0).toUpperCase() + input.substr(1);
+        return "";
+    }
+});
 // Inicio Administrador
 app.controller("inicioAdmin", ["$scope", "$http", function (s, http) {
     s.empresas = [];
@@ -33,32 +41,26 @@ app.controller("ODTs", ["$scope", "$http", "$location", function (s, http, l) {
     s.ODTs = [];
     http.get(url+"/data/clientes/" + l.path().split('/')[3]).then(function (response) {
         if(response.data.success){
-            s.Cliente = response.data.data.name;
+            s.Cliente = response.data.data.slug;
             s.ODTs = response.data.data.odts;
         }
     }, function (response) {
         console.log("ERROR: ", response);
-    })
+    });
 }]);
 // Crear orden de trabajo
-app.controller("crearODT", ["$scope", "$http", "$location", function (s, http, l) {
+app.controller("crearODT", ["$scope", "$http", "$location", "Upload", function (s, http, l, Upload){
     s.Cliente = l.path().split('/')[3];
     s.NombreProyecto = ""; // Nombre de la ODT
-    s.Descripcion = "" // Descripcion general de ODT
+    s.Descripcion = ""; // Descripcion general de ODT
     s.files = []; // Lista de archivos seleccionados
     s.filesSelected = ""; // String de atributo name de un archivo
     s.Fecha = moment().format('YYYY-MM-DD'); // Fecha actual
     s.RespPrincipal = {}; // Responsable principal (Plantar)
+    var areas =["Web", "Diseño", "Contenido", "Multimedia", "Estrategia", "Cotizaciónes"];
     s.Areas = { // Areas de trabajo para combobox
         selected: null, // Aqui se guarda el seleccionado
-        "options": [ // Distintas opciones a elegir
-            "Web",
-            "Diseño",
-            "Contenido",
-            "Multimedia",
-            "Estrategia",
-            "Cotizaciónes"
-        ]
+        options: areas // Distintas opciones a elegir
     };
     s.dateInicio = ""; // Fecha de Inicio
     s.dateFin = ""; // Fecha de Fin
@@ -76,7 +78,7 @@ app.controller("crearODT", ["$scope", "$http", "$location", function (s, http, l
         // Se cargan los usuarios que correspondan al cliente
         http.get(url+"/data/users/" + s.Cliente).then(function (response) {
             if(response.data.success){
-                s.Responsables = response.data.data; // Guarda usuarios como posibles reesponsables
+                s.Responsables = response.data.msg; // Guarda usuarios como posibles reesponsables
             }
         }, function (response) {
             console.log("ERROR: ", response);
@@ -163,9 +165,66 @@ app.controller("crearODT", ["$scope", "$http", "$location", function (s, http, l
     };
 
     s.send = function () {
-        var dtInicio = moment(s.dateInicio, 'dddd MMMM DD YYYY HH:mm:ss ZZ').format('YYYY-MM-DD');
-        var dtFin = moment(s.dateFin, 'dddd MMMM DD YYYY HH:mm:ss ZZ').format('YYYY-MM-DD');
-        alert(dtInicio + " ### " + dtFin);
+        var MSG_SUCCESS = "<span>Se creo una nueva orden.</span>";
+        var MSG_ERROR = "<span>Error al crear orden.</span>";
+        if(s.Cliente != "" && s.RespPrincipal != null
+            && moment(s.dateInicio, 'dddd MMMM DD YYYY HH:mm:ss ZZ').isValid()
+            && moment(s.dateFin, 'dddd MMMM DD YYYY HH:mm:ss ZZ').isValid() && s.NombreProyecto != ""
+            && moment(s.Fecha).isValid() && s.Areas.selected != null && s.Descripcion != "") {
+            var cliente = s.Cliente;
+            var idUsers = s.RespPrincipal.id;
+            for (var i = 0; i < s.SelectedResponsables.length; i++) {
+                idUsers += "," + s.SelectedResponsables[i].id;
+            }
+            var dtInicio = moment(s.dateInicio, 'dddd MMMM DD YYYY HH:mm:ss ZZ').format('YYYY-MM-DD');
+            var dtFin = moment(s.dateFin, 'dddd MMMM DD YYYY HH:mm:ss ZZ').format('YYYY-MM-DD');
+
+            Upload.upload({
+                url: url + "/data/clientes/" + s.Cliente + "/odts",
+                data: {
+                    nombre: s.NombreProyecto,
+                    client_id: cliente.charAt(0).toUpperCase() + cliente.substr(1),
+                    fechaCreacion: s.Fecha,
+                    area: s.Areas.selected,
+                    descripcion: s.Descripcion,
+                    fechaInicio:  dtInicio,
+                    fechaFin: dtFin,
+                    usuarios: idUsers
+                }
+            }).then(function (data, status, headers, config) {
+                console.log(status);
+                s.NombreProyecto = ""; // Nombre de la ODT
+                s.Descripcion = ""; // Descripcion general de ODT
+                s.files = []; // Lista de archivos seleccionados
+                s.filesSelected = ""; // String de atributo name de un archivo
+                s.Areas = { // Areas de trabajo para combobox
+                    selected: null, // Aqui se guarda el seleccionado
+                    options: areas
+                };
+                s.dateInicio = ""; // Fecha de Inicio
+                s.dateFin = ""; // Fecha de Fin
+                s.SelectedResponsables = []; // Lista de responsables seleccionados
+                Materialize.toast(MSG_SUCCESS, 5000, "rounded");
+            }, function (data, status, headers, config) {
+                console.log("STATUS: ", status);
+                console.log("ERROR: ", data);
+                Materialize.toast(MSG_ERROR, 5000, "rounded");
+            });/**/
+
+            /*var datos = "Nombre del Proyecto: " + s.NombreProyecto
+                + "\nCliente: " + cliente.charAt(0).toUpperCase() + cliente.substr(1)
+                + "\nFecha: " + s.Fecha
+                + "\nArea: " + s.Areas.selected
+                + "\nDescripcion: " + s.Descripcion
+                + "\nUsuarios: " + idUsers
+                + "\nInicio: " + dtInicio
+                + "\nFin: " + dtFin;
+
+            alert(datos);*/
+        }
+        else{
+            Materialize.toast("Ingresa todos los campos obligatorios.", 5000, "rounded");
+        }
     };
 }]);
 // Crear Empresa
@@ -325,3 +384,7 @@ app.controller("crearUsuario", ["$scope", "$http", "Upload", function (s, http, 
 
 
 }]);
+// Ver ODT
+app.controller("verODT", "$scope", "$http", function (s, http) {
+
+});
