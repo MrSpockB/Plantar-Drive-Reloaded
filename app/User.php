@@ -24,7 +24,7 @@ class User extends CartalystUser
     protected $hidden = [
         'password', 'remember_token',
     ];
-
+    protected $appends = ['full_name'];
     public function odts()
     {
         return $this->belongsToMany('App\ODT', 'odt_user', 'user_id', 'odt_id');
@@ -32,5 +32,13 @@ class User extends CartalystUser
     public function client()
     {
         return $this->belongsTo('App\Client');
+    }
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+    public function getFullNameAttribute()
+    {
+        return $this->first_name.' '.$this->last_name;
     }
 }

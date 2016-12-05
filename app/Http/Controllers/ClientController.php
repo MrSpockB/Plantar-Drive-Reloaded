@@ -42,7 +42,10 @@ class ClientController extends Controller
         /////
         $client->path_image = $destination_path . $filename;
         $client->save();
-        return response()->json(['success' => true, 'msg'=>'Cliente creado']);
+        if($request->ajax)
+            return response()->json(['success' => true, 'msg'=>'Cliente creado']);
+        else
+            return redirect('admin');
     }
 
     /**

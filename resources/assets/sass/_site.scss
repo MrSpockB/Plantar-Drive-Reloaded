@@ -1,0 +1,16 @@
+nav
+{
+	background-color: #1F1D1D;
+	a img{ width: 57%; }
+	ul a:hover {background-color: rgba(255,255,255,0.1);}
+	.profile { display: flex; align-items: center; .img{ width: 30px; height: 30px; overflow: hidden; }}
+}
+#form-empresa
+{
+	max-width: 700px;
+	margin: auto;
+}
+.container.large
+{
+	padding-bottom: 30px
+}

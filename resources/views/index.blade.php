@@ -1,78 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Plantar Drive</title>
-    <link rel="stylesheet" href="lib/font/material-icons/material-icons.css"/>
-    <link rel="stylesheet" href="lib/css/materialize.min.css"/>
-    <script src="lib/js/jquery.min.js"></script>
-    <script src="lib/js/angular.min.js"></script>
-    <script src="lib/js/angular-route.min.js"></script>
-    <script src="lib/js/materialize.min.js"></script>
-    <style>
-        .login{
-            padding: 0px;
-            border: 1px #9E9E9E solid;
-            border-radius: 10px;
-            width: 700px;
-            margin: 100px auto;
-        }
-        form{
-            margin-left: 20px;
-            margin-right: 20px;
-        }
-        .login-header{
-            margin: 0;
-            background-color: #1F1D1D;
-            height: 100px;
-            border-radius: 7px 7px 0 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .login-header h4{
-            color: #FFFFFF;
-            margin: 0;
-        }
-        #recuperarDatos{
-            margin-right: 10px;
-        }
-        #recuperarDatos:hover{
-            text-decoration: underline;
-        }
-        .ingreso{
-            width: 100%;
-            margin: 20px 0;
-            text-align: right;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('lib/font/material-icons/material-icons.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('lib/css/materialize.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}"/>
 </head>
 <body>
-    <nav style="background-color: #1F1D1D">
+    <nav>
         <div class="navbar-fixed">
-            <a class="brand-logo"><img src="img/logo-plantar.png" style="width: 57%;"></a>
+            <a class="brand-logo">
+                <img src="img/logo-plantar.png">
+            </a>
         </div>
     </nav>
     <div class="login container">
         <div class="login-header">
             <h4>Iniciar Sesión</h4>
         </div>
-        <form>
-            <div class="input-field" style="margin-top: 30px">
-                <i class="material-icons prefix" style="color: #757575;">perm_identity</i>
-                <input type="text" id="user">
-                <label for="user">Usuario</label>
+        {!! Form::open(array('url' => 'login', 'method' => 'POST', 'class' => 'loginForm')) !!}
+            <div class="input-field">
+                <i class="material-icons prefix">perm_identity</i>
+                <input type="text" id="email" name="email" >
+                <label for="email">Usuario</label>
             </div>
             <div class="input-field">
-                <i class="material-icons prefix" style="color: #757575;">lock_outline</i>
-                <input type="password" id="pass">
-                <label for="pass">Contraseña</label>
+                <i class="material-icons prefix">lock_outline</i>
+                <input type="password" id="password" name="password" >
+                <label for="password">Contraseña</label>
             </div>
-            <div class="ingreso" style="">
+            @if(session('message'))
+                <div class="alert alert-danger">
+                    {{ session('message') }}
+                </div>
+            @endif
+            <div class="ingreso">
                 <a href="#" id="recuperarDatos">No puedo ingresar a mi cuenta</a>
-                <a href="admin" class="btn waves-effect waves-light">Iniciar Sesión</a>
+                <input type="submit" value="Iniciar Sesión" class="btn waves-effect waves-light">
             </div>
-        </form>
+        {!! Form::close() !!}
     </div>
+    <script src="{{ asset('lib/js/jquery.min.js')}}"></script>
+    <script src="{{ asset('lib/js/materialize.min.js')}}"></script>
 </body>
 </html>

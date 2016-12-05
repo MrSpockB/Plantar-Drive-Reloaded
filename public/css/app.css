@@ -1,0 +1,128 @@
+nav {
+  background-color: #1F1D1D; }
+  nav a img {
+    width: 57%; }
+  nav ul a:hover {
+    background-color: rgba(255, 255, 255, 0.1); }
+  nav .profile {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center; }
+    nav .profile .img {
+      width: 30px;
+      height: 30px;
+      overflow: hidden; }
+
+#form-empresa {
+  max-width: 700px;
+  margin: auto; }
+
+.container.large {
+  padding-bottom: 30px; }
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+  .alert h4 {
+    margin-top: 0;
+    color: inherit; }
+  .alert .alert-link {
+    font-weight: bold; }
+  .alert > p,
+  .alert > ul {
+    margin-bottom: 0; }
+  .alert > p + p {
+    margin-top: 5px; }
+
+.alert-success {
+  background-color: #dff0d8;
+  border-color: #d0e9c6;
+  color: #3c763d; }
+  .alert-success hr {
+    border-top-color: #c1e2b3; }
+  .alert-success .alert-link {
+    color: #2b542c; }
+
+.alert-info {
+  background-color: #d9edf7;
+  border-color: #bcdff1;
+  color: #31708f; }
+  .alert-info hr {
+    border-top-color: #a6d5ec; }
+  .alert-info .alert-link {
+    color: #245269; }
+
+.alert-warning {
+  background-color: #fcf8e3;
+  border-color: #faf2cc;
+  color: #8a6d3b; }
+  .alert-warning hr {
+    border-top-color: #f7ecb5; }
+  .alert-warning .alert-link {
+    color: #66512c; }
+
+.alert-danger {
+  background-color: #f2dede;
+  border-color: #ebcccc;
+  color: #a94442; }
+  .alert-danger hr {
+    border-top-color: #e4b9b9; }
+  .alert-danger .alert-link {
+    color: #843534; }
+
+.login {
+  padding: 0px;
+  border: 1px #9E9E9E solid;
+  border-radius: 10px;
+  width: 700px;
+  margin: 100px auto; }
+
+form {
+  margin-left: 20px;
+  margin-right: 20px; }
+
+.login-header {
+  margin: 0;
+  background-color: #1F1D1D;
+  height: 100px;
+  border-radius: 7px 7px 0 0;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center; }
+  .login-header h4 {
+    color: #FFFFFF;
+    margin: 0; }
+
+#recuperarDatos {
+  margin-right: 10px; }
+  #recuperarDatos:hover {
+    text-decoration: underline; }
+
+.ingreso {
+  width: 100%;
+  margin: 20px 0;
+  text-align: right; }
+
+.loginForm .input-field i {
+  color: #757575; }
+
+.loginForm .input-field:first-child {
+  margin-top: 30px; }
+
+.form-odt, #filesDropzone, .wrap-form {
+  max-width: 700px;
+  margin: 0 auto; }
+
+.btnCreateODT {
+  margin-top: 30px; }
+
+.detailODT .card {
+  border: 1px solid; }
+
+/*# sourceMappingURL=app.css.map */

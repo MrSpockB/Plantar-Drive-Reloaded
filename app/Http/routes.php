@@ -16,9 +16,10 @@ Route::resource('data/clientes.odts', 'ODTController',['except'=>['create', 'edi
 Route::get('data/users', 'SentinelController@getUsers');
 Route::get('data/users/{client}', 'SentinelController@getUsersbyClient');
 Route::get('/checkLogin', 'SentinelController@checkLogin');
-Route::post('/registerUser', 'SentinelController@createUser');
+Route::post('/registerUser', 'SentinelController@createClientUser');
 Route::post('/registerAdmin', 'SentinelController@createAdmin');
 Route::post('/login', 'SentinelController@login');
+Route::get('/logout', 'SentinelController@logout');
 
 Route::post('/upload', 'FileController@testUpload');
 
@@ -27,15 +28,29 @@ Route::get('/', function ()
    return view('index');
 });
 
-Route::get('admin', function ()
+Route::group(['middleware' => 'sentinel.admin','prefix'=>'admin'], function()
 {
-   return view('admin');
+	Route::get('/', 'AdminViewController@showIndex');
+	//Route::get('cliente/{slug}', 'AdminViewController@showClientODTS');
+	Route::get('usuarios', 'AdminViewController@showViewAllUsers');
+	Route::get('crearUsuario', 'AdminViewController@showViewCreateUser');
+	Route::get('crearEmpresa', 'AdminViewController@showViewCreateClient');
+	Route::post('crearUsuario', 'SentinelController@createUser');
+});
+
+Route::group(['middleware' => 'sentinel.user','prefix'=>'cliente'], function()
+{
+	Route::get('/', 'ClientViewController@redirectToHome');
+	Route::get('{slug}', 'ClientViewController@showClientODTS');
+	Route::get('{slug}/crearOrden', 'ClientViewController@showViewCreateODT');
+	Route::get('{slug}/ODT/{id}', 'ClientViewController@showViewDetailsODT');
+	Route::post('{slug}/crearOrden', 'ODTController@store');
+	Route::post('{slug}/uploadFile', 'FileController@uploadFileToClientAccount');
 });
 
 Route::get('demo', function ()
 {
 	return view('demoFiles');
-
 });
 
 

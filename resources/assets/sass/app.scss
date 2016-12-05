@@ -1,2 +1,56 @@
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
+@import 'site';
+@import 'alerts';
+.login
+{
+    padding: 0px;
+    border: 1px #9E9E9E solid;
+    border-radius: 10px;
+    width: 700px;
+    margin: 100px auto;
+}
+form
+{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.login-header
+{
+    margin: 0;
+    background-color: #1F1D1D;
+    height: 100px;
+    border-radius: 7px 7px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h4 {color: #FFFFFF; margin: 0;}
+}
+#recuperarDatos
+{
+    margin-right: 10px;
+    &:hover { text-decoration: underline; }
+}
+.ingreso
+{
+    width: 100%;
+    margin: 20px 0;
+    text-align: right;
+}
+.loginForm
+{
+	.input-field i { color: #757575;}
+	.input-field:first-child { margin-top: 30px }
+}
+.form-odt, #filesDropzone, .wrap-form
+{
+    max-width: 700px;
+    margin: 0 auto;
+}
+.btnCreateODT
+{
+    margin-top: 30px
+}
+.detailODT
+{
+    .card{ border: 1px solid; }
+}

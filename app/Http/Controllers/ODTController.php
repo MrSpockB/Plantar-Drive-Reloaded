@@ -38,37 +38,38 @@ class ODTController extends Controller
      */
     public function store(Request $request, $cliente)
     {
+        //dd($request->all());
         $client = $client = Client::where('slug', '=', $cliente)->first();
         $odt = new ODT;
         $odt->name = $request->input('nombre');
         $odt->creationDate = $request->input('fechaCreacion');
         $odt->area = $request->input('area');
         $odt->description = $request->input('descripcion');
-        $odt->startDate = $request->input('fechaInicio');
-        $odt->endDate = $request->input('fechaFin');
+        $odt->startDate = $request->input('fechaInicio_submit');
+        $odt->endDate = $request->input('fechaFin_submit');
         $odt->progress_estimated = 0;
         $odt->progress_real = 0;
         $odt->status = 'Pendiente';
         $odt->client_id = $client->id;
-        //
-        $idsUsers = $request->input('usuarios');
-        $idsU = explode(',', $idsUsers);
         $odt->save();
-        foreach ($idsU as $value) 
+        //
+        $idsUsers = $request->input('usuariosIDs');
+        $idsU = explode(',', $idsUsers);
+        foreach ($idsU as $value)
         {
             $odt->users()->attach($value);
         }
-        //
-        $idsFiles = $request->input('archivos');
+        $idsFiles = $request->input('filesIDs');
         $idsF = explode(',', $idsFiles);
-        foreach ($idsF as $value) 
+        foreach ($idsF as $value)
         {
             $file = File::find($value);
             $file->odt_id = $odt->id;
             $file->save();
         }
         $odt->save();
-        return response()->json(['success' => true, 'msg'=>'Orden de trabajo agregada']);
+        return redirect('/cliente/'.$cliente)->with('message', 'Orden de trabajo creada');
+        //return response()->json(['success' => true, 'msg'=>'Orden de trabajo agregada']);
     }
 
     /**
